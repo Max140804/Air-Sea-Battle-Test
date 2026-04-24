@@ -3,7 +3,7 @@
 public class EnemyCrossDetector : MonoBehaviour
 {
     [Header("Hearts UI (Assign in order)")]
-    [SerializeField] GameObject[] hearts; // heart1, heart2, heart3
+    [SerializeField] GameObject[] hearts;
 
     private int enemiesCrossed = 0;
     private int heartsLost = 0;
@@ -14,7 +14,7 @@ public class EnemyCrossDetector : MonoBehaviour
 
         enemiesCrossed++;
 
-        Destroy(other.gameObject);
+        other.gameObject.GetComponent<EnemyHealth>().DestroyEnemy();
 
         if (enemiesCrossed % 2 == 0)
         {

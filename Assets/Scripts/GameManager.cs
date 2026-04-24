@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI waveText;
 
     private int score = 0;
+    private int highScore = 0;
     public int waveCount = 0;
 
     public bool isGameOver = false;
@@ -23,6 +24,10 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            PlayerPrefs.DeleteKey("HighScore");
+
+            highScore = PlayerPrefs.GetInt("HighScore", 0);
         }
         else
         {
@@ -46,6 +51,8 @@ public class GameManager : MonoBehaviour
 
     void SetPlayerXPosition()
     {
+        if (playerObj == null || cam == null) return;
+
         float currentY = playerObj.transform.position.y;
         float currentZ = playerObj.transform.position.z;
 
@@ -60,18 +67,26 @@ public class GameManager : MonoBehaviour
         playerObj.transform.position = new Vector3(worldPos.x, currentY, currentZ);
     }
 
-  
     public void Score()
     {
         if (isGameOver) return;
 
         score += 5;
+
+        if (score > highScore)
+        {
+            highScore = score;
+            PlayerPrefs.SetInt("HighScore", highScore);
+            PlayerPrefs.Save();
+        }
+
         UpdateScoreUI();
     }
 
     void UpdateScoreUI()
     {
-        scoreText.text = score.ToString("000");
+        if (scoreText != null)
+            scoreText.text = score.ToString("000");
     }
 
     public void NextWave()
@@ -84,6 +99,8 @@ public class GameManager : MonoBehaviour
 
     void UpdateWaveUI()
     {
-        waveText.text = waveCount.ToString("00");
+        if (waveText != null)
+            waveText.text = waveCount.ToString("00");
     }
+
 }

@@ -34,4 +34,12 @@ public class EnemyHealth : MonoBehaviour
 
         Destroy(gameObject, 0.2f);
     }
+
+    public void DestroyEnemy()
+    {
+        if (isDead) return;
+        isDead = true;
+        GetComponent<SpriteRenderer>().enabled = false;
+        Destroy(gameObject, 0.2f);
+    }
 }
