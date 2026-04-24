@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        if(isGameOver && Input.GetKeyDown(KeyCode.Space))
+        if(isGameOver && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
         }
