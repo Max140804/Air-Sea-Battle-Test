@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class GameManager : MonoBehaviour
     public int waveCount = 0;
 
     public bool isGameOver = false;
+
+    public GameObject gameOverUI;
+    public TextMeshProUGUI finalScoreText;
+    public TextMeshProUGUI highScoreText;
 
     void Awake()
     {
@@ -42,11 +47,30 @@ public class GameManager : MonoBehaviour
         SetPlayerXPosition();
         UpdateScoreUI();
         UpdateWaveUI();
+
+        gameOverUI.SetActive(false);
     }
 
     void Update()
     {
         SetPlayerXPosition();
+
+        if (isGameOver)
+        {
+            GameOver();
+        }
+
+        if(isGameOver && Input.GetKeyDown(KeyCode.Space))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        }
+
+        if (isGameOver) return;
+
+        if(Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        }
     }
 
     void SetPlayerXPosition()
@@ -101,6 +125,17 @@ public class GameManager : MonoBehaviour
     {
         if (waveText != null)
             waveText.text = waveCount.ToString("00");
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        if (gameOverUI != null)
+            gameOverUI.SetActive(true);
+        if (finalScoreText != null)
+            finalScoreText.text = "SCORE: " + score.ToString("00");
+        if (highScoreText != null)
+            highScoreText.text = "HIGH SCORE: " + highScore.ToString("00");
     }
 
 }
