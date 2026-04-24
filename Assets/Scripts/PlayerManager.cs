@@ -26,6 +26,8 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.Instance.isGameOver) return;
+
         HandleAngleInput();
         HandleFireInput();
     }

@@ -133,9 +133,9 @@ public class GameManager : MonoBehaviour
         if (gameOverUI != null)
             gameOverUI.SetActive(true);
         if (finalScoreText != null)
-            finalScoreText.text = "SCORE: " + score.ToString("00");
+            finalScoreText.text = score.ToString("00");
         if (highScoreText != null)
-            highScoreText.text = "HIGH SCORE: " + highScore.ToString("00");
+            highScoreText.text = highScore.ToString("00");
     }
 
 }
